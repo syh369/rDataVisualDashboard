@@ -6,6 +6,9 @@ import { MapContainer, TileLayer, GeoJSON, useMapEvents, Marker, Popup } from 'r
 function Map({neighborData, onRegionSelect}) {
   let neighborhoodData = neighborData;
 
+  const tileURL = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+  const tileAttribute = 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ';
+
   const [selectedRegion, setSelectedRegion] = useState(null);
 
   let neighborhoodFeatures = neighborhoodData.features;
@@ -13,13 +16,13 @@ function Map({neighborData, onRegionSelect}) {
   const defaultStyle = {
     fillOpacity: 0.1,
     color: 'blue',
-    weight: 0.5
+    weight: 0
   };
 
   const selectedStyle = {
     fillOpacity: 0.5,
     color: 'green',
-    weight: 2
+    weight: 1
   };
 
   function onEachneighborhood(neighborhood, layer) {
@@ -83,8 +86,8 @@ function Map({neighborData, onRegionSelect}) {
     <MapContainer center={[40.754932, -73.984016]} zoom={11.5} style={{ height: '70vh', width: '45vw' }}>
       <TileLayer
         ext='png'
-        url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}'
-        attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url = {tileURL}
+        attribution= {tileAttribute}
       />
       <GeoJSON  
         style={(feature) =>
