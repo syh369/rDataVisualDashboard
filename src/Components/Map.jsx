@@ -63,6 +63,7 @@ function Map({neighborData, onRegionSelect}) {
   }
 
 
+
   // function LocationMarker() {
   //   const [position, setPosition] = useState(null)
   //   const map = useMapEvents({
@@ -83,7 +84,7 @@ function Map({neighborData, onRegionSelect}) {
   // }
 
   return (
-    <MapContainer center={[40.754932, -73.984016]} zoom={11.5} style={{ height: '70vh', width: '45vw' }}>
+    <MapContainer center={[40.754932, -73.984016]} zoom={11.5} style={{ height: '70vh', width: '50vw' }}>
       <TileLayer
         ext='png'
         url = {tileURL}
@@ -96,7 +97,6 @@ function Map({neighborData, onRegionSelect}) {
         data={neighborhoodFeatures}
         onEachFeature={onEachneighborhood}
       />
-      {/* <LocationMarker /> */}
     </MapContainer>
   );
 };

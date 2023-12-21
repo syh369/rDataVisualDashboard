@@ -1,21 +1,21 @@
-// DummyDashboard.jsx
+// CovidDashboard.jsx
 import React, { useState, useEffect } from 'react';
-import {    Container,
+import {
+            Box,
             Typography, 
+            Divider,
             Paper, 
             Grid, 
             TextField, 
             Button, 
             Autocomplete, 
             Snackbar,
-            CircularProgress, 
+            CircularProgress,
             Tooltip } from '@mui/material';
 
-const Dashboard = ({neighborData, selectedRegion}) => {
+const CovidDashboard = ({neighborData, selectedRegion}) => {
 
     let neighborFeatures = neighborData.features;
-
-    //console.log(neighborFeatures);
 
     // Create an empty object to store unique zipcodes as keys
     const neighborhoodBasicInfo = [];
@@ -35,22 +35,11 @@ const Dashboard = ({neighborData, selectedRegion}) => {
           }
     });
 
-    //console.log("DEBUG HERE ===========================");
-    //console.log(neighborhoodBasicInfo.map((entry) => {return entry.zipcode}));
-
     const [selectedData, setSelectedData] = useState({});
 
-    // //dummy data
-    // const updated_data = {
-    //     zip_codes: '10024',
-    //     total_number_of_covid: 12,
-    //     //totalDeaths: 15,
-    //     //totalRecovered: 21,
-    // }
-
     // Handle the change of input address by user
-    const [locationInput, setLocationInput] = useState('');
-    const [autocompleteInput, setAutocompleteInput] = useState('');
+    const [locationInput, setLocationInput] = useState(null);
+    const [autocompleteInput, setAutocompleteInput] = useState(null);
 
     // Handle the loading effects
     const [loading, setLoading] = useState(false);
@@ -89,9 +78,11 @@ const Dashboard = ({neighborData, selectedRegion}) => {
                 )
                 .then((data) => {
                     if (data.length > 0) {
-                        console.log("Fetched Result: "+ data);
+                        console.log("Fetched Result: ");
+                        console.log(data);
                         setSelectedData(data[0]);
                     } else {
+                        setSelectedData(null);
                         setSnackbarOpen(true);
                     }
                 })
@@ -112,11 +103,11 @@ const Dashboard = ({neighborData, selectedRegion}) => {
       }, [selectedRegion]);
 
     return (
-        <Container style={{ background: '#f2f6fc' }}>
-            <Paper elevation={3} style={{ padding: 20, marginBottom: 20 }}>
+        <Box style={{ background: '#f2f6fc'}}>
+            <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <Paper elevation={3} style={{ padding: '20px' }}>
+                        <Paper elevation={0} style={{ padding: '20px' }}>
                             <Typography variant="h6">COVID-19 Dashboard</Typography>
                         </Paper>
                     </Grid>
@@ -126,7 +117,9 @@ const Dashboard = ({neighborData, selectedRegion}) => {
                             id="autocomplete-address-bar"
                             // calling the freeSolo prop inside the Autocomplete component
                             freeSolo
-                            options={neighborhoodBasicInfo.map((entry) => {return String(entry.zipcode)})}
+                            options={neighborhoodBasicInfo.map((entry) => {
+                                const optionString = `${entry.zipcode}: ${entry.feature.PO_NAME}, ${entry.feature.borough}`;
+                                return optionString})}
                             //getOptionLabel={(info) => info.label.BOROUGH+" "+info.label.GEOCODE+": "+info.label.GEONAME}
                             value={locationInput}
                             onChange={handleLocationInputChange}
@@ -140,11 +133,11 @@ const Dashboard = ({neighborData, selectedRegion}) => {
                         <Tooltip title="Select Date" arrow>
                             <TextField
                                 id="date"
-                                label="Select a Date"
+                                label="Date"
                                 type="date"
                                 fullWidth
                                 InputLabelProps={{
-                                    shrink: true,
+                                shrink: true,
                                 }}
                                 value={selectedDate}
                                 onChange={(e) => setSelectedDate(e.target.value)}
@@ -169,21 +162,26 @@ const Dashboard = ({neighborData, selectedRegion}) => {
             </Paper>
             
             {!loading && (
-                <Paper  elevation={3} style={{ padding: 20 }}>
+                <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
                     {Object.entries(selectedData).map(([title, data]) => (
-                        <Grid container spacing={2} key={title}>
+                        <React.Fragment key={title}>
+                            <Grid container spacing={2}>
                             <Grid item xs={6}>
-                                <Typography variant="body1" style={{alignContent:'left', color : '#000000'}}>{String(title)}</Typography>
+                                <Typography variant="body1" sx={{ alignContent: 'left', color: '#000000' }}>
+                                {String(title)}
+                                </Typography>
                             </Grid>
                             <Grid item xs={6}>
                                 <Typography variant="body1">{data}</Typography>
                             </Grid>
-                        </Grid>
-                    ))}
+                            </Grid>
+                            <Divider/>
+                        </React.Fragment>
+                ))}
 
                     <Snackbar
                     open={snackbarOpen}
-                    autoHideDuration={5000}
+                    autoHideDuration={4000}
                     onClose={handleSnackbarClose}
                     message="No data returned from the API."
                     severity="warning"
@@ -192,10 +190,8 @@ const Dashboard = ({neighborData, selectedRegion}) => {
                 </Paper>
                 
             )}
-
-            
-        </Container>
+        </Box>
     );
 };
 
-export default Dashboard;
+export default CovidDashboard;
