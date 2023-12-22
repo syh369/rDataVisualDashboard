@@ -63,28 +63,8 @@ function Map({neighborData, onRegionSelect}) {
   }
 
 
-
-  // function LocationMarker() {
-  //   const [position, setPosition] = useState(null)
-  //   const map = useMapEvents({
-  //     click() {
-  //       map.locate()
-  //     },
-  //     locationfound(e) {
-  //       setPosition(e.latlng)
-  //       map.flyTo(e.latlng, 13)
-  //     },
-  //   })
-  
-  //   return position === null ? null : (
-  //     <Marker position={position}>
-  //       <Popup>You are here</Popup>
-  //     </Marker>
-  //   )
-  // }
-
   return (
-    <MapContainer center={[40.754932, -73.984016]} zoom={11.5} style={{ height: '70vh', width: '50vw' }}>
+    <MapContainer center={[40.754932, -73.984016]} zoom={11.5} style={{ height: '75vh', width: '50vw' }}>
       <TileLayer
         ext='png'
         url = {tileURL}

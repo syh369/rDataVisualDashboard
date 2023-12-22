@@ -1,5 +1,6 @@
 import './App.css';
 import UIStack from './Components/UIStack';
+import Page from './Webpage/Page';
 
 const xxxStyle = {
   display: "flex",
@@ -11,7 +12,7 @@ const xxxStyle = {
 function App() {
   return (
     <div>
-      <UIStack/>
+      <Page/>
     </div>
   );
 }

@@ -35,7 +35,7 @@ const CovidDashboard = ({neighborData, selectedRegion}) => {
           }
     });
 
-    const [selectedData, setSelectedData] = useState({});
+    const [selectedData, setSelectedData] = useState(null);
 
     // Handle the change of input address by user
     const [locationInput, setLocationInput] = useState(null);
@@ -102,6 +102,23 @@ const CovidDashboard = ({neighborData, selectedRegion}) => {
         }
       }, [selectedRegion]);
 
+    
+    var dataView = !selectedData ? <div>no data avaliable </div> : 
+        Object.entries(selectedData).map(([title, data]) => (
+            <React.Fragment key={title}>
+                <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <Typography variant="body1" sx={{ alignContent: 'left', color: '#000000' }}>
+                    {String(title)}
+                    </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography variant="body1">{data}</Typography>
+                </Grid>
+                </Grid>
+                <Divider/>
+            </React.Fragment>))
+
     return (
         <Box style={{ background: '#f2f6fc'}}>
             <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
@@ -118,7 +135,7 @@ const CovidDashboard = ({neighborData, selectedRegion}) => {
                             // calling the freeSolo prop inside the Autocomplete component
                             freeSolo
                             options={neighborhoodBasicInfo.map((entry) => {
-                                const optionString = `${entry.zipcode}: ${entry.feature.PO_NAME}, ${entry.feature.borough}`;
+                                const optionString = `${entry.zipcode}`;
                                 return optionString})}
                             //getOptionLabel={(info) => info.label.BOROUGH+" "+info.label.GEOCODE+": "+info.label.GEONAME}
                             value={locationInput}
@@ -162,33 +179,20 @@ const CovidDashboard = ({neighborData, selectedRegion}) => {
             </Paper>
             
             {!loading && (
-                <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
-                    {Object.entries(selectedData).map(([title, data]) => (
-                        <React.Fragment key={title}>
-                            <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                                <Typography variant="body1" sx={{ alignContent: 'left', color: '#000000' }}>
-                                {String(title)}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Typography variant="body1">{data}</Typography>
-                            </Grid>
-                            </Grid>
-                            <Divider/>
-                        </React.Fragment>
-                ))}
+                <div>
+                    <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
+                        {dataView}
+                    </Paper>
 
                     <Snackbar
-                    open={snackbarOpen}
-                    autoHideDuration={4000}
-                    onClose={handleSnackbarClose}
-                    message="No data returned from the API."
-                    severity="warning"
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        open={snackbarOpen}
+                        autoHideDuration={4000}
+                        onClose={handleSnackbarClose}
+                        message="No data returned from the API."
+                        severity="warning"
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     />
-                </Paper>
-                
+                </div>
             )}
         </Box>
     );
