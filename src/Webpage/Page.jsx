@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
+import HomeIcon from '@mui/icons-material/Home';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -13,12 +13,14 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UIStack from '../Components/UIStack';
 
+import TextMobileStepper from './Slider';
+
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography variant="body2" color="#ffffff" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://digitaltwin.engineering.columbia.edu/">
+        Urban Hybrid Twin
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -35,9 +37,9 @@ export default function Page() {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
+          <HomeIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            Urban Hybrid Twin
           </Typography>
         </Toolbar>
       </AppBar>
@@ -58,22 +60,21 @@ export default function Page() {
               color="text.primary"
               gutterBottom
             >
-              Album layout
+              NYC Data Dashboard
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
+            <Typography variant="h6" align="center" color="text.secondary" paragraph>
+                Data dashboard for viewing NYC related data. Use the map on the left to view
+                or select a region. Specify date before geting data.
             </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
             >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack>
+                <TextMobileStepper/>
+            </Box>
+
+            
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="lg">
@@ -87,17 +88,17 @@ export default function Page() {
         </Container>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
+      <Box sx={{ bgcolor: '#1D4F91', p: 6 }} component="footer">
+        <Typography variant="h6" align="center" color="#ffffff" gutterBottom>
           Footer
         </Typography>
         <Typography
           variant="subtitle1"
           align="center"
-          color="text.secondary"
+          color="#ffffff"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Nees Some texts for footer purpose
         </Typography>
         <Copyright />
       </Box>

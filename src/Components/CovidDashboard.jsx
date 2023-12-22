@@ -1,5 +1,6 @@
 // CovidDashboard.jsx
 import React, { useState, useEffect } from 'react';
+import InfoIcon from '@mui/icons-material/Info';
 import {
             Box,
             Typography, 
@@ -11,7 +12,8 @@ import {
             Autocomplete, 
             Snackbar,
             CircularProgress,
-            Tooltip } from '@mui/material';
+            Tooltip, 
+            Alert} from '@mui/material';
 
 const CovidDashboard = ({neighborData, selectedRegion}) => {
 
@@ -101,9 +103,24 @@ const CovidDashboard = ({neighborData, selectedRegion}) => {
             //handleFetchData();
         }
       }, [selectedRegion]);
-
     
-    var dataView = !selectedData ? <div>no data avaliable </div> : 
+    const errorDataNotification = (
+        <div>
+            <Box>
+                <Alert severity="info">No data avaliable, please use filters above.</Alert>
+            </Box>
+        </div>
+    )
+    
+    const noDataView = (
+        <div>
+            <Typography >
+                <InfoIcon/>
+                    No data avaliable
+            </Typography>
+        </div>
+    )
+    var dataView = !selectedData ? errorDataNotification : 
         Object.entries(selectedData).map(([title, data]) => (
             <React.Fragment key={title}>
                 <Grid container spacing={2}>
